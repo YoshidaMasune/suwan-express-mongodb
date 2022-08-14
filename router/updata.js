@@ -5,7 +5,9 @@ const Users = require('../models/users');
 const Addresses = require('../models/address');
 
 // Middleware
-const check_miter = require('../middleware/check_miter')
+const check_miter = require('../middleware/check_miter');
+const valid_data_count = require('../middleware/valid_data_count')
+
 
 router.put('/user-all', check_miter, async (req, res) => {
    const userInp = req.body;
@@ -17,6 +19,7 @@ router.put('/user-all', check_miter, async (req, res) => {
       res.send('no update')
 
    }else{
+
       if (data.miter.sort((a,b) => b-a)[0] === miter || !miter) {
          try{
             const address = await Addresses.findOneAndUpdate({_id:userInp._id}, {
@@ -65,19 +68,21 @@ router.put('/user-all', check_miter, async (req, res) => {
             {
                new: true
             });
-      
-            const user = await Users.findOneAndUpdate({_id:userInp.userID}, {
-               $set:{
-                  first_name: userInp.first_name,
-                  last_name: userInp.last_name,
-                  jaya: userInp.jaya
-               }
-            },{
-               new: true
-            })
-      
+
+            if (userInp.userID){
+               const user = await Users.findOneAndUpdate({_id:userInp.userID}, {
+                  $set:{
+                     first_name: userInp.first_name,
+                     last_name: userInp.last_name,
+                     jaya: userInp.jaya
+                  }
+               },{
+                  new: true
+               });
+               user.save()
+            }
+   
             address.save();
-            user.save()
             
             res.status(200).send(`${userInp._id} is updated`)
          }catch(err) {
@@ -95,7 +100,6 @@ router.put('/miter', check_miter, async (req, res) => {
 
    if (!data) {
       res.send('no update')
-
    }else{
 
       if (data.miter.sort((a,b) => b-a)[0] === miter || !miter ){
@@ -118,7 +122,24 @@ router.put('/miter', check_miter, async (req, res) => {
       }
    
    }
-   
+})
+
+router.put('/user', async (req, res) => {
+   const userInp = req.body;
+   try{
+      const user = await Users.findByIdAndUpdate(userInp.userID, {
+         $set: {
+            first_name: userInp.first_name,
+            last_name: userInp.last_name
+         }
+      });
+      user.save().then((err, result) => {
+         res.status(200).send(result) 
+      })
+      
+   }catch(err) {
+      res.status(500)
+   }
 })
 
 module.exports = router;
