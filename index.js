@@ -12,9 +12,11 @@ app.use(express.json());
 const createRouter = require('./router/create')
 const getDataRouter = require('./router/getData')
 const updateRouter = require('./router/updata')
+const deleteRouter = require('./router/delete')
 
-app.use('/create', createRouter);
-app.use('/', getDataRouter);
-app.use('/update', updateRouter);
+app.use('/create', createRouter)
+app.use('/', getDataRouter)
+app.use('/update', updateRouter)
+app.use('/delete', deleteRouter)
 
-app.listen(PORT, () => console.log(`http://localhost:${PORT}`))
+app.listen(PORT)

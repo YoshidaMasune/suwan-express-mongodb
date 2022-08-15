@@ -24,7 +24,6 @@ router.get('/users-all', async (req, res) => {
    }catch(err) {
       res.status(500).send('server errer')
    }
-  
 })
 
 module.exports = router;

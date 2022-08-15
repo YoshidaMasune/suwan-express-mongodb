@@ -14,13 +14,13 @@ router.put('/user-all', check_miter, async (req, res) => {
    const { _id, miter } = req.body;
    const data = await Addresses.findById(_id).exec()
 
-   // valid miter === before
+   // valid miter === before ?
    if (!data) {
       res.send('no update')
-
    }else{
 
       if (data.miter.sort((a,b) => b-a)[0] === miter || !miter) {
+         // miter not modity
          try{
             const address = await Addresses.findOneAndUpdate({_id:userInp._id}, {
                $set:{
@@ -59,7 +59,6 @@ router.put('/user-all', check_miter, async (req, res) => {
                   section: userInp.section,
                   foor: userInp.foor,
                   room: userInp.room,
-      
                },
                $push:{
                   miter: [userInp.miter]

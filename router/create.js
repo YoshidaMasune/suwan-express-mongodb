@@ -34,7 +34,7 @@ router.post('/', validAdd, validAddCouter, async (req, res) => {
    }
 });
 
-router.post('/nouser', validAddCouter, async (req, res) => {
+router.post('/no-user', validAddCouter, async (req, res) => {
    const userInp = req.body
 
    try{
