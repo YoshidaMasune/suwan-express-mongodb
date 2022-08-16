@@ -6,8 +6,9 @@ const Addresses = require('../models/address');
 // MiddleWare 
 const validAdd = require('../middleware/valid_address');
 const validAddCouter = require('../middleware/valid_data_count');
+const create_valid_miter = require('../middleware/create_valid_miter')
 
-router.post('/', validAdd, validAddCouter, async (req, res) => {
+router.post('/', validAdd, validAddCouter, create_valid_miter, async (req, res) => {
    const userInp = req.body
 
    try{
@@ -34,7 +35,7 @@ router.post('/', validAdd, validAddCouter, async (req, res) => {
    }
 });
 
-router.post('/no-user', validAddCouter, async (req, res) => {
+router.post('/no-user', validAddCouter, create_valid_miter, async (req, res) => {
    const userInp = req.body
 
    try{

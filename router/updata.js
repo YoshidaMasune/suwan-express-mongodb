@@ -32,7 +32,6 @@ router.put('/user-all', check_miter, async (req, res) => {
             {
                new: true
             });
-      
             const user = await Users.findOneAndUpdate({_id:userInp.userID}, {
                $set:{
                   first_name: userInp.first_name,
@@ -42,10 +41,8 @@ router.put('/user-all', check_miter, async (req, res) => {
             },{
                new: true
             })
-      
             address.save();
             user.save()
-      
             res.status(200).send(`${userInp._id} is updated`)
          }catch(err) {
             res.status(500).send(err)
@@ -53,7 +50,6 @@ router.put('/user-all', check_miter, async (req, res) => {
          }
       }else{
          try{
-   
             const address = await Addresses.findOneAndUpdate({_id:userInp._id}, {
                $set:{
                   section: userInp.section,
@@ -67,7 +63,6 @@ router.put('/user-all', check_miter, async (req, res) => {
             {
                new: true
             });
-
             if (userInp.userID){
                const user = await Users.findOneAndUpdate({_id:userInp.userID}, {
                   $set:{
@@ -80,9 +75,7 @@ router.put('/user-all', check_miter, async (req, res) => {
                });
                user.save()
             }
-   
             address.save();
-            
             res.status(200).send(`${userInp._id} is updated`)
          }catch(err) {
             res.status(500).send(err)
@@ -90,17 +83,14 @@ router.put('/user-all', check_miter, async (req, res) => {
          }
       }
    }
-   
 });
 
 router.put('/miter', check_miter, async (req, res) => {
    const { _id, miter } = req.body;
    const data = await Addresses.findById(_id).exec()
-
    if (!data) {
       res.send('no update')
    }else{
-
       if (data.miter.sort((a,b) => b-a)[0] === miter || !miter ){
          res.send('no update')
       }else{
@@ -110,9 +100,7 @@ router.put('/miter', check_miter, async (req, res) => {
                   miter: [miter]
                }
             })
-      
             address.save();
-      
             res.status(200).send('updata 1 miter')
          }catch(err){
             console.log(err)

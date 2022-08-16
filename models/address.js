@@ -20,7 +20,10 @@ const ASchema = new mongoose.Schema({
       required: true
    },
    miter: [Number],
-   userID: mongoose.SchemaTypes.ObjectId
+   userID: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'users'
+   }
 },{timestamps: true})
 
 module.exports = mongoose.model("addresses", ASchema)

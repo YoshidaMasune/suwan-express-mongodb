@@ -5,24 +5,21 @@ const Addresses = require('../models/address');
 
 router.get('/users-all', async (req, res) => {
    try{
-      const data =  await Addresses.aggregate([
-         {
-            $lookup: {
-               from: "users",
-               localField: "userID",
-               foreignField: "_id",
-               as: "user"
-            }
-         },
-         {
-            $replaceRoot: { newRoot: { $mergeObjects: [ { $arrayElemAt: [ "$user", 0 ] }, "$$ROOT" ] } }
-         },
-         { $project: { user: 0 } }
-      ])
-
+      const data =  await Addresses.find().populate('userID').exec()
       res.status(200).json(data)
    }catch(err) {
       res.status(500).send('server errer')
+   }
+});
+
+router.get('/user', async (req, res) => {
+   try {
+      const inp = req.body
+      const data = await Addresses.findById(inp._id).populate('userID').exec()
+      res.status(200).json(data)
+   } catch (err) {
+      console.log(err);
+      res.status(500).send('server intenal error')
    }
 })
 
