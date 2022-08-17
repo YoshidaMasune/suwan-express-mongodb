@@ -54,9 +54,14 @@ app.post('/login', async (req, res) => {
 })
 
 app.post('/auth', (req, res) => {
-   const token = req.headers.authorization.split(' ')[1]
-   var decoded = jwt.verify(token, secret);
-   res.json({decoded: decoded})
+   try {
+      const token = req.headers.authorization.split(' ')[1]
+      var decoded = jwt.verify(token, secret);
+      res.json({status: "ok", decoded: decoded})    
+   } catch (err) {
+      res.json({status: "error", msg: err})
+   }
+   
 })
 app.use('/create', createRouter)
 app.use('/', getDataRouter)
