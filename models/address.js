@@ -19,8 +19,8 @@ const ASchema = new mongoose.Schema({
       max: 5,
       required: true
    },
-   miter: [Number],
-   userID: {
+   miter: [Object],
+   user: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'users'
    }

@@ -8,18 +8,20 @@ const Addresses = require('../models/address');
 const check_miter = require('../middleware/check_miter');
 const valid_data_count = require('../middleware/valid_data_count')
 
-
 router.put('/user-all', check_miter, async (req, res) => {
    const userInp = req.body;
    const { _id, miter } = req.body;
-   const data = await Addresses.findById(_id).exec()
-
+   const data = await Addresses.findById(_id).exec()   
+   const lastMiter = data.miter.map( i => {
+      console.log(i)
+      return i.miter
+   })
    // valid miter === before ?
    if (!data) {
       res.send('no update')
    }else{
 
-      if (data.miter.sort((a,b) => b-a)[0] === miter || !miter) {
+      if (lastMiter.sort((a,b) => b-a)[0] === miter || !miter) {
          // miter not modity
          try{
             const address = await Addresses.findOneAndUpdate({_id:userInp._id}, {
@@ -36,7 +38,8 @@ router.put('/user-all', check_miter, async (req, res) => {
                $set:{
                   first_name: userInp.first_name,
                   last_name: userInp.last_name,
-                  jaya: userInp.jaya
+                  jaya: userInp.jaya,
+                  internet: userInp.internet
                }
             },{
                new: true
@@ -57,7 +60,10 @@ router.put('/user-all', check_miter, async (req, res) => {
                   room: userInp.room,
                },
                $push:{
-                  miter: [userInp.miter]
+                  miter: {
+                     miter: miter,
+                     date: new Date()
+                  }
                }
             },
             {
@@ -88,16 +94,23 @@ router.put('/user-all', check_miter, async (req, res) => {
 router.put('/miter', check_miter, async (req, res) => {
    const { _id, miter } = req.body;
    const data = await Addresses.findById(_id).exec()
+
+   const lastMiter = data.miter.map( i => {
+      return i.miter
+   })
    if (!data) {
       res.send('no update')
    }else{
-      if (data.miter.sort((a,b) => b-a)[0] === miter || !miter ){
+      if (lastMiter.sort((a,b) => b-a)[0] === miter || !miter ){
          res.send('no update')
       }else{
          try{
             const address = await Addresses.findByIdAndUpdate(_id, {
                $push:{
-                  miter: [miter]
+                  miter: [{
+                     miter: miter,
+                     date: new Date()
+                  }]
                }
             })
             address.save();
@@ -114,7 +127,7 @@ router.put('/miter', check_miter, async (req, res) => {
 router.put('/user', async (req, res) => {
    const userInp = req.body;
    try{
-      const user = await Users.findByIdAndUpdate(userInp.userID, {
+      const user = await Users.findByIdAndUpdate(userInp.user, {
          $set: {
             first_name: userInp.first_name,
             last_name: userInp.last_name

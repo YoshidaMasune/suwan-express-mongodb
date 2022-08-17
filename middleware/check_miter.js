@@ -6,13 +6,9 @@ const check_miter = async (req, res, next) => {
       const data = await Addresses.findById(req.body._id).exec()
       if (data){
          if (req.body.miter.toString().length > 4){
-            res.status(400).send('Bad request')
+            res.status(400).send('miter morethen 0000')
          }else{
-            if (data.miter.sort((a,b) => b-a)[0] >= req.body.miter){
-               res.status(200).send('miter no modify')
-            }else{
-               next()  
-            }
+            next()
          }
       }else{
          res.status(404).send('not found this user')

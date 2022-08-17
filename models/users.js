@@ -11,6 +11,10 @@ const usersSchema = new mongoose.Schema({
    },
    jaya: {
       type: String
+   },
+   internet: {
+      type: Boolean,
+      default: false
    }
 })
 

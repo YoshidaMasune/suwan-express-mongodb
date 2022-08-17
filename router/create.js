@@ -16,14 +16,18 @@ router.post('/', validAdd, validAddCouter, create_valid_miter, async (req, res) 
       const user = await Users.create({
          first_name: userInp.first_name,
          last_name: userInp.last_name,
-         jaya: userInp.jaya
+         jaya: userInp.jaya,
+         internet: userInp.internet
       })
       const address = await Addresses.create({
          section: userInp.section,
          foor: userInp.foor,
          room: userInp.room,
-         miter: [userInp.miter],
-         userID: user._id || null,
+         miter: [{
+            miter: userInp.miter,
+            date: new Date()
+         }],
+         user: user._id || null,
       })
 
       address.save();
@@ -39,12 +43,14 @@ router.post('/no-user', validAddCouter, create_valid_miter, async (req, res) => 
    const userInp = req.body
 
    try{
-
       const address = await Addresses.create({
          section: userInp.section,
          foor: userInp.foor,
          room: userInp.room,
-         miter: [userInp.miter],
+         miter: [{
+            miter: userInp.miter,
+            date: new Date()
+         }],
          userID: null,
       })
 

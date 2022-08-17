@@ -28,9 +28,19 @@ router.delete('/address', (req, res) => {
    try {
       Addresses.findByIdAndDelete(req.body._id).exec()
       res.status(200).send('delete 1 ')
-   } catch (error) {
+   } catch (err) {
       console.log(err);
       res.status(500).send(err)
+   }
+})
+
+router.delete('/all', (req, res) => {
+   try {
+      Addresses.deleteMany().exec()
+      Users.deleteMany().exec()
+      res.status(200).send('delete')
+   } catch (error) {
+      res.status(500).send(error)
    }
 })
 module.exports = router;
