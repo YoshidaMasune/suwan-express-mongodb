@@ -140,6 +140,22 @@ router.put('/user', async (req, res) => {
    }catch(err) {
       res.status(500)
    }
+});
+
+router.put('/status', async (req, res) => {
+   const userInp = req.body
+   try{
+      const user = await Users.findByIdAndUpdate(userInp.userID, {
+         $set:{
+            status: userInp.status
+         }
+      })
+      user.save().then((err, result) => {
+         res.status(200).json(result)
+      })
+   }catch(err) {
+      res.status(500).json({status: "error"})
+   }
 })
 
 module.exports = router;

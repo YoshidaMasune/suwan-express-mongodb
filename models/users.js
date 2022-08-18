@@ -15,6 +15,10 @@ const usersSchema = new mongoose.Schema({
    internet: {
       type: Boolean,
       default: false
+   },
+   status: {
+      type: Boolean,
+      default: true
    }
 })
 

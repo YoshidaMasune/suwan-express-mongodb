@@ -40,17 +40,22 @@ app.post('/register', (req, res) => {
 
 app.post('/login', async (req, res) => {
    const addmin = await Addmin.findOne({username: req.body.username}).exec();
-   if (addmin) {
-      bcrypt.compare(req.body.password, addmin.password, function(err, login) {
-         if(login){
-            const token = jwt.sign({ username: addmin.username }, secret, {expiresIn: '1h'})
-            res.status(200).json({status: "login", token})
-
-         }else{
-            res.status(200).json({status: "inlogin"})
-         }
-      });
+   if (addmin){
+      if (addmin) {
+         bcrypt.compare(req.body.password, addmin.password, function(err, login) {
+            if(login){
+               const token = jwt.sign({ username: addmin.username }, secret, {expiresIn: '1h'})
+               res.status(200).json({status: "login", token})
+   
+            }else{
+               res.status(200).json({status: "inlogin"})
+            }
+         });
+      }
+   }else{
+      res.status(200).json({status: 'not found addmin/user'})
    }
+   
 })
 
 app.post('/auth', (req, res) => {
