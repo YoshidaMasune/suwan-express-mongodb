@@ -12,7 +12,6 @@ router.post('/', validAdd, validAddCouter, create_valid_miter, async (req, res) 
    const userInp = req.body
 
    try{
-
       const user = await Users.create({
          first_name: userInp.first_name,
          last_name: userInp.last_name,
