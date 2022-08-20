@@ -5,7 +5,7 @@ const validdata = (req, res, next) => {
    if (check.section <= 2 && check.foor <= 3 && check.room <= 5){
       next()
    }else{
-      res.status(400).send(err)
+      res.status(400).send('form invalided')
    }
 }
 
