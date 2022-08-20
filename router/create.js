@@ -33,7 +33,7 @@ router.post('/', validAdd, validAddCouter, create_valid_miter, async (req, res) 
       address.save();
       user.save();
 
-      res.status(200).send('create user successfully')
+      res.status(200).json({status: 'ok'})
    }catch(err) {
       res.status(400).send(err)
    }

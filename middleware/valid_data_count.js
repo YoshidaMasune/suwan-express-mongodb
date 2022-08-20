@@ -7,7 +7,7 @@ const validCouterAdd = async (req, res, next) => {
    const check = await Addresses.findOne({section: inp.section, foor: inp.foor, room: inp.room}).exec();
 
    if (check){
-      res.status(203).send('has 1 record')
+      res.status(203).json({status: 'has 1 user'})
    }else{
       next()
    }
