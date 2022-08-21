@@ -107,10 +107,10 @@ router.put('/miter', check_miter, async (req, res) => {
          try{
             const address = await Addresses.findByIdAndUpdate(_id, {
                $push:{
-                  miter: [{
+                  miter: {
                      miter: miter,
                      date: new Date()
-                  }]
+                  }
                }
             })
             address.save();

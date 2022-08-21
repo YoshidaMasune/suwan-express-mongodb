@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const Users = require('../models/users');
 const Addresses = require('../models/address');
+const Addmin = require('../models/addmin')
 
 router.get('/users', async (req, res) => {
    try{
@@ -21,6 +22,10 @@ router.get('/user', async (req, res) => {
       console.log(err);
       res.status(500).send('server intenal error')
    }
+})
+
+router.get('/price', (req, res) => {
+   Addmin.findOne({password: req.body.password})
 })
 
 module.exports = router;
