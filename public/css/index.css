@@ -1,0 +1,31 @@
+/* *, 
+::after, 
+::before{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   text-decoration: none;
+   font-family: 'KoHo', sans-serif;
+}
+
+.container{
+   margin: auto;
+   max-width: 60%;
+   padding: 0.3rem;
+}
+
+.container-md{
+   margin: auto;
+   max-width: 80%;
+   padding: 0.3rem;
+}
+
+
+@media screen and (max-width: 470px){
+   .container{
+      max-width: 100%;
+   }
+   .container-md{
+      max-width: 100%;
+   }
+} */

@@ -6,11 +6,16 @@ const condb = require('./config/condb')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const secret = "suwan-jsontoken-2022";
+const ejs = require('ejs')
+const path = require('path')
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static('public'))
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, '/views'))
 
 const createRouter = require('./router/create')
 const getDataRouter = require('./router/getData')
@@ -57,7 +62,6 @@ app.post('/login', async (req, res) => {
    }
    
 })
-
 app.post('/auth', (req, res) => {
    try {
       const token = req.headers.authorization.split(' ')[1]
@@ -68,6 +72,7 @@ app.post('/auth', (req, res) => {
    }
    
 })
+
 app.use('/create', createRouter)
 app.use('/', getDataRouter)
 app.use('/update', updateRouter)
