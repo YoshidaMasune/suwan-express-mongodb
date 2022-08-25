@@ -12,14 +12,6 @@ const addminSchema = new mongoose.Schema({
    password: {
       type: String,
       required: true
-   },
-   price_miter: {
-      type: Number,
-      required: true
-   },
-   price_inaternet: {
-      type: Number,
-      required: true
    }
 })
 

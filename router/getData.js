@@ -13,10 +13,10 @@ router.get('/users', async (req, res) => {
    }
 });
 
-router.get('/user', async (req, res) => {
+router.get('/user/:_id', async (req, res) => {
    try {
-      const inp = req.body
-      const data = await Addresses.findById(inp._id).populate('user').exec()
+      const _id = req.params._id
+      const data = await Addresses.findById(_id).populate('user').exec()
       res.status(200).json(data)
    } catch (err) {
       console.log(err);
